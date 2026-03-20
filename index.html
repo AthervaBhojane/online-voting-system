@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Voting System - Web Interface for Voters, Candidates & Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="site-header">
+            <h1>Student Voting System</h1>
+            <p class="subtitle">Web Interface for Voters, Candidates &amp; Admin</p>
+        </header>
+
+        <nav class="main-menu">
+            <button data-view="voter-view" class="menu-btn active">Apply as Voter</button>
+            <button data-view="candidate-view" class="menu-btn">Apply as Candidate</button>
+            <button data-view="admin-view" class="menu-btn">Admin</button>
+            <button data-view="results-view" class="menu-btn">End Election / Results</button>
+        </nav>
+
+        <main>
+            <!-- Voter View -->
+            <section id="voter-view" class="view active">
+                <h2>Voter Panel</h2>
+                <div class="card">
+                    <h3>1. Register as Voter</h3>
+                    <form id="voter-form">
+                        <div class="form-row">
+                            <label for="voter-name"></label>
+                            <input type="text" id="voter-name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="voter-id"></label>
+                            <input type="text" id="voter-id" placeholder="Enter your unique ID" required>
+                        </div>
+                        <button type="submit" class="primary">Save Voter Details</button>
+                    </form>
+                    <p class="hint">You can vote only once with a given unique number.</p>
+                </div>
+
+                <div class="card">
+                    <h3>2. Vote for a Candidate</h3>
+                    <div class="form-row">
+                        <label for="vote-voter-id"></label>
+                        <input type="text" id="vote-voter-id" placeholder="Enter the same unique ID you registered with">
+                    </div>
+                    <button id="load-candidates-btn" class="secondary">Load Candidates List</button>
+                    <div id="candidates-list" class="candidate-list"></div>
+                    <div class="form-row">
+                        <label for="candidate-code-input"></label>
+                        <input type="text" id="candidate-code-input" placeholder="Enter Candidate Code to Vote">
+                    </div>
+                    <button id="submit-vote-btn" class="primary">Submit Vote</button>
+                    <p class="hint">You can vote only once with a given unique number.</p>
+                </div>
+            </section>
+
+            <!-- Candidate View -->
+            <section id="candidate-view" class="view">
+                <h2>Candidate Panel</h2>
+                <div class="card">
+                    <h3>Apply as Candidate</h3>
+                    <form id="candidate-form">
+                        <div class="form-row">
+                            <label for="candidate-name"></label>
+                            <input type="text" id="candidate-name" placeholder="Enter your full name" required>
+                        </div>
+                        <button type="submit" class="primary">Register as Candidate</button>
+                    </form>
+                    <p class="hint">Your unique code will be generated automatically from your initials.</p>
+                    <div id="candidate-code-display" class="info-box"></div>
+                </div>
+            </section>
+
+            <!-- Admin View -->
+            <section id="admin-view" class="view">
+                <h2>Admin Panel</h2>
+                <div class="card" id="admin-login-card">
+                    <h3>Admin Login</h3>
+                    <form id="admin-login-form">
+                        <div class="form-row">
+                            <label for="admin-password"></label>
+                            <input type="password" id="admin-password" placeholder="Password(Default 'admin')">
+                        </div>
+                        <button type="submit" class="primary">Login</button>
+                    </form>
+                </div>
+
+                <div class="card hidden" id="admin-menu-card">
+                    <div class="admin-menu-buttons">
+                        <button id="show-voters-btn" class="secondary">Check Voters List</button>
+                        <button id="show-candidates-btn" class="secondary">Check Candidates List</button>
+                        <button id="show-summary-btn" class="secondary">Quick Election Summary</button>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="new-admin-password">Change Admin Password</label>
+                        <input type="password" id="new-admin-password" placeholder="Enter new admin password">
+                    </div>
+                    <button id="change-admin-pass-btn" class="primary">Change Password</button>
+
+                    <div id="admin-output" class="scroll-box"></div>
+                </div>
+            </section>
+
+            <!-- Results / End Election View -->
+            <section id="results-view" class="view">
+                <h2>Election Results</h2>
+                <div class="card">
+                    <p class="hint"></p>
+                    <button id="refresh-results-btn" class="primary">Refresh Results</button>
+                    <div id="results-output" class="scroll-box"></div>
+                </div>
+            </section>
+        </main>
+
+        <div id="toast" class="toast hidden"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,372 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    display: block;
+    padding: 28px 18px;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: block;
+}
+
+header.site-header {
+    padding: 0 0 18px 0;
+    border-bottom: none;
+    background: transparent;
+    text-align: center;
+}
+
+header.site-header h1 {
+    font-size: 1.6rem;
+    font-weight: 650;
+    margin-bottom: 2px;
+    color: #fff;
+}
+
+header.site-header .subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.main-menu {
+    display: flex;
+    gap: 10px;
+    padding: 6px 0 14px 0;
+    background: transparent;
+    border-bottom: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.menu-btn {
+    flex: 0 1 210px;
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: transparent;
+    color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.menu-btn:hover {
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.menu-btn.active {
+    font-weight: 650;
+    border-color: rgba(255, 255, 255, 1);
+}
+
+main {
+    padding: 8px 0 20px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.view.active h2 {
+    text-align: center;
+    width: 100%;
+}
+
+.card {
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    margin-bottom: 18px;
+}
+
+.card h3 {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.view.active .card h3 {
+    width: 100%;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.form-row {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+label {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Make label/input group stay centered but label text left-aligned */
+.view label {
+    width: 100%;
+    text-align: left;
+}
+
+input {
+    padding: 8px 10px;
+    border-radius: 0;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: #000;
+    color: #fff;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+}
+
+input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+button {
+    font-family: inherit;
+}
+
+.primary,
+.secondary {
+    border-radius: 999px;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    background: transparent;
+    color: #fff;
+}
+
+.primary {
+    font-weight: 650;
+}
+
+.primary:hover {
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+.secondary {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.secondary:hover {
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Make half-width buttons align nicely under text */
+.view .primary,
+.view .secondary {
+    text-align: center;
+}
+
+
+.hint {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+}
+
+.view.active .hint {
+    width: 100%;
+    text-align: center;
+}
+
+.candidate-list {
+    margin: 10px 0;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    width: 100%;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.candidate-row {
+    display: grid;
+    grid-template-columns: 0.9fr 2.1fr;
+    gap: 8px;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.85rem;
+}
+
+.candidate-row-header {
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+/* Align "action" buttons with half-width inputs */
+#load-candidates-btn,
+#submit-vote-btn,
+#refresh-results-btn,
+#change-admin-pass-btn,
+#show-voters-btn,
+#show-candidates-btn,
+#show-summary-btn {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    display: block;
+}
+
+.candidate-row span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.info-box {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.scroll-box {
+    margin-top: 10px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 10px 12px;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    font-size: 0.85rem;
+    width: 100%;
+}
+
+.scroll-box pre {
+    white-space: pre;
+    word-wrap: break-word;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.admin-menu-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: #111;
+    color: #fff;
+    font-size: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+#toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 18px 10px;
+    }
+
+    .main-menu {
+        flex-direction: column;
+    }
+
+    .menu-btn {
+        flex: 1 1 auto;
+    }
+
+    main {
+        padding: 8px 0 14px 0;
+    }
+
+    input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .view label {
+        width: 100%;
+    }
+
+    .candidate-list,
+    .info-box,
+    .scroll-box {
+        width: 100%;
+    }
+
+    #load-candidates-btn,
+    #submit-vote-btn,
+    #refresh-results-btn,
+    #change-admin-pass-btn,
+    #show-voters-btn,
+    #show-candidates-btn,
+    #show-summary-btn {
+        width: 100%;
+        min-width: 0;
+    }
+}
+

@@ -1,82 +1,111 @@
 # Student Voting System (C++ + Web UI)
 
-A simple Student Election voting system where students can apply as **voters** and **candidates**, students can cast **one vote per unique voter number**, and an **admin (teacher)** can review records and finalize the election.
+Simple student election system with:
 
-## Features
+- **C++ console app** (`main.cpp`)
+- **Web UI** (`index.html`, `style.css`, `app.js`)
+- **Node.js backend** (`server.js`)
 
-### Voter Registration
-- Students enter:
-  - `name`
-  - `unique identity number`
-- Stored in `voters.txt` as:
-  - `name | uniqueNumber | hasVoted(0/1)`
+All three share the same text files:
 
-### Candidate Registration
-- Students enter:
-  - `candidate name`
-- The system auto-generates a **unique candidate code** using:
-  - first initial of first word + first initial of last word
-  - Example: `Rahul Sharma` → `RS`
-- If code already exists, it automatically adds a numeric suffix:
-  - `RS`, `RS1`, `RS2`, ...
-- Stored in `candidates.txt` as:
-  - `name | code`
+- `voters.txt` – `name | number | hasVoted(0/1)`
+- `candidates.txt` – `name | code`
+- `admin_pass.txt` – admin password (`admin` by default)
+- `<code>.txt` – one file per candidate, each line is one vote (voter number)
 
-### Voting (One Vote Only)
-- Voters provide:
-  - `unique voter number`
-  - `candidate code`
-- The system prevents double voting using the `hasVoted` flag.
-- Each candidate has their own vote file:
-  - `<candidateCode>.txt`
-- Votes are stored as voter numbers (one line per vote).
+---
 
-### Admin (Teacher) Capabilities
-- Admin password is stored in `admin_pass.txt` (default: `admin`)
-- Admin can:
-  - check voters list
-  - check candidates list with live vote counts
-  - view a live election summary
+## 1. Requirements
 
-### End Election / Results
-- Reads all candidates and counts votes from their files
-- Displays final vote counts and **winner(s)** (supports ties)
+- **C++ compiler** (e.g. `g++` from MinGW/MSYS2)
+- **Node.js** (LTS version, from nodejs.org)
+- Optional: **VS Code** with:
+  - C/C++ extension
+  - Live Server (for serving `index.html`)
 
-## Tech Used
+Project folder:  
+`d:\Academic_Projects\online_student_voting system`
 
-- **C++**: `main.cpp` (console voting system)
-- **Web Frontend**:
-  - `index.html`, `style.css`, `app.js`
-- **Backend API**:
-  - **Node.js + Express** (`server.js`)
-  - **CORS** enabled for frontend API calls
-- **Data Storage** (shared with C++ and backend):
-  - `voters.txt`
-  - `candidates.txt`
-  - `admin_pass.txt`
-  - `<candidateCode>.txt` (per-candidate vote files)
+---
 
-## How the Web UI Works
-The web UI communicates with the backend using:
-- `http://localhost:3000/api`
+## 2. Setup Node.js backend
 
-Key endpoints used:
-- `POST /api/voter/register`
-- `GET /api/voters`
-- `POST /api/candidate/register`
-- `GET /api/candidates`
-- `GET /api/candidates/withVotes`
-- `POST /api/vote`
-- `POST /api/admin/login`
-- `POST /api/admin/password`
-- `GET /api/summary`
-- `GET /api/results`
+Open a terminal in the project folder and run:
 
-## Setup & Run
-
-### 1) Backend (Node.js)
-In the project folder:
 ```bash
+cd "d:\Academic_Projects\online_student_voting system"
 npm init -y
 npm install express cors
+```
+
+Start the backend:
+
+```bash
 node server.js
+```
+
+You should see:
+
+```text
+Student Voting backend listening on http://localhost:3000
+```
+
+Keep this terminal running while using the web UI.
+
+---
+
+## 3. Run the C++ console app
+
+From the same project folder:
+
+```bash
+g++ main.cpp -o voting_system
+.\voting_system.exe
+```
+
+Main menu:
+
+1. Apply as a Voter  
+2. Apply as a Candidate  
+3. Admin  
+4. Search Candidate by Name  
+5. End Election Process  
+
+Admin password (default): **`admin`**  
+Data is stored in the text files listed above.
+
+---
+
+## 4. Run the Web UI
+
+Open `index.html` in a browser (or use Live Server in VS Code).
+
+Main sections:
+
+- **Apply as Voter**
+  - Register with name + unique number
+  - Vote for a candidate using their code
+- **Apply as Candidate**
+  - Register as candidate
+  - Code generated from initials (e.g. "Rahul Sharma" → `RS`, with numeric suffix if needed)
+- **Admin**
+  - Login (password: `admin` or changed value)
+  - View voters list
+  - View candidates list with live vote counts
+  - View quick election summary
+  - Change admin password
+- **End Election / Results**
+  - Shows final votes and winner(s) based on current data
+
+The web UI talks to the Node backend (`http://localhost:3000/api`) and uses the same text files as the C++ app, so both interfaces see the same election data.
+
+---
+
+## 5. Typical workflow
+
+1. Start **Node backend**: `node server.js`
+2. Open **web UI** (`index.html`) and/or run **C++ app** (`voting_system.exe`).
+3. Register candidates.
+4. Register voters and cast votes.
+5. Use Admin panel or End Election/Results to see winners.
+
