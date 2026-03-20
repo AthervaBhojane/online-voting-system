@@ -7,17 +7,14 @@
 
 using namespace std;
 
-// -------------------------------------------------------------
-// File names (stored in the project directory)
-// -------------------------------------------------------------
-const string VOTERS_FILE      = "voters.txt";       // name | uniqueNumber | hasVoted(0/1)
-const string CANDIDATES_FILE  = "candidates.txt";   // name | code
-const string ADMIN_PASS_FILE  = "admin_pass.txt";   // admin password
 
-// -------------------------------------------------------------
-// Utility helpers
-// -------------------------------------------------------------
+// file names (stored in project directory)
+const string VOTERS_FILE      = "voters.txt";
+const string CANDIDATES_FILE  = "candidates.txt";
+const string ADMIN_PASS_FILE  = "admin_pass.txt";
 
+
+// utility helpers
 string trim(const string &s) {
     size_t start = s.find_first_not_of(" \t\r\n");
     if (start == string::npos) return "";
@@ -31,7 +28,7 @@ string toLower(string s) {
     return s;
 }
 
-// Read or initialize admin password
+// admin password
 string getAdminPassword() {
     ifstream in(ADMIN_PASS_FILE);
     if (!in) {
@@ -51,10 +48,8 @@ void setAdminPassword(const string &newPass) {
     }
 }
 
-// -------------------------------------------------------------
-// Voter management
-// -------------------------------------------------------------
 
+// Voter management
 struct VoterRecord {
     string name;
     string number;
@@ -65,7 +60,7 @@ VoterRecord parseVoterLine(const string &line) {
     VoterRecord v{};
     string t = trim(line);
     if (t.empty()) return v;
-    // format: name | number | hasVoted
+    
     stringstream ss(t);
     string part;
     vector<string> parts;
@@ -79,7 +74,7 @@ VoterRecord parseVoterLine(const string &line) {
     if (parts.size() >= 3) {
         v.hasVoted = (parts[2] == "1");
     } else {
-        v.hasVoted = true; // legacy line without flag (assume already voted)
+        v.hasVoted = true;
     }
     return v;
 }
@@ -120,10 +115,8 @@ VoterRecord *findVoterByNumber(vector<VoterRecord> &voters, const string &number
     return nullptr;
 }
 
-// -------------------------------------------------------------
-// Candidate management
-// -------------------------------------------------------------
 
+// Candidate management
 struct Candidate {
     string name;
     string code;
@@ -168,7 +161,7 @@ bool candidateCodeExists(const string &code) {
     return false;
 }
 
-// generate 2-letter (or more) candidate code
+// generate candidate code
 string generateCandidateCode(const string &name) {
     string trimmed = trim(name);
     if (trimmed.empty()) return "XX";
@@ -188,7 +181,7 @@ string generateCandidateCode(const string &name) {
     return code;
 }
 
-// count votes in candidate's file
+// count votes
 int countVotesForCode(const string &code) {
     string filename = code + ".txt";
     ifstream in(filename);
@@ -201,9 +194,7 @@ int countVotesForCode(const string &code) {
     return count;
 }
 
-// -------------------------------------------------------------
-// Core features
-// -------------------------------------------------------------
+
 
 void applyAsVoter() {
     string name;
@@ -240,7 +231,7 @@ void applyAsVoter() {
                 continue;
             }
 
-            // Load voters and check existing record
+            
             auto voters = loadAllVoters();
             VoterRecord *existing = findVoterByNumber(voters, uniqueNumber);
 
@@ -257,7 +248,7 @@ void applyAsVoter() {
                 existing->name = name; // update name if changed
             }
 
-            // Show candidates
+            // show candidates
             auto candidates = loadAllCandidates();
             if (candidates.empty()) {
                 cout << "No candidates available to vote for.\n";
@@ -291,7 +282,7 @@ void applyAsVoter() {
                 continue;
             }
 
-            // Record vote
+
             {
                 string filename = canonicalCode + ".txt";
                 ofstream out(filename, ios::app);
@@ -331,7 +322,7 @@ void applyAsCandidate() {
 
     string code = generateCandidateCode(name);
 
-    // Ensure unique code – add a numeric suffix if needed
+    // unique code
     if (candidateCodeExists(code)) {
         int suffix = 1;
         string base = code;
@@ -352,7 +343,7 @@ void applyAsCandidate() {
     cout << "Your unique identity code is: " << code << "\n";
 }
 
-// Simple search: list candidates containing a substring
+
 void searchCandidateByName() {
     auto candidates = loadAllCandidates();
     if (candidates.empty()) {
@@ -381,9 +372,6 @@ void searchCandidateByName() {
     }
 }
 
-// -------------------------------------------------------------
-// Admin menu and reports
-// -------------------------------------------------------------
 
 void adminMenu() {
     cout << "\n--- Admin Login ---\n";
@@ -476,7 +464,7 @@ void adminMenu() {
     }
 }
 
-// Final result
+// final result
 void endElectionProcess() {
     cout << "\n--- End Election Process ---\n";
 
@@ -520,9 +508,7 @@ void endElectionProcess() {
     cout << "\nElection process has ended. Program will now exit.\n";
 }
 
-// -------------------------------------------------------------
-// Main
-// -------------------------------------------------------------
+
 
 int main() {
     while (true) {
