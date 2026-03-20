@@ -114,4 +114,9 @@ The web UI talks to the Node backend (`http://localhost:3000/api`) and uses the 
 
 
 This is my C++ academic project where I primarily focused on implementing the core logic and functionality using C++. The UI and backend components were developed using AI-assisted tools through prompt engineering.
+
+
+---
+
+
 ![template for SVS](https://github.com/user-attachments/assets/ea2fc6b4-71ea-4bfa-adae-342ad4261b5b)
